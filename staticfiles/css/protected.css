@@ -1,0 +1,33 @@
+body{
+    background-color: rgb(0, 0, 0);
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.header{
+    position: fixed;
+    width: 100%;
+    background-color: orange;
+    z-index: 1;
+    display: flex;
+    justify-content: space-around;
+    border-radius: 30px;
+
+}
+h2:hover{
+    color: black;
+}
+
+.posts{
+    color: white;
+    text-decoration: none;
+}
+.posts:active{
+    color: white;
+}
+.post{
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+}
+.post:active{
+    color: white;
+}

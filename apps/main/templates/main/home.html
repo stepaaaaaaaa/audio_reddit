@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/home.css' %}">
+  <title>Главная</title>
+</head>
+<body>
+  <div class="header"><div><a class="post" href="{% url 'home' %}"><h2>Главная</h2></div></a>
+  {% if user.is_authenticated %}
+  <div><a class="posts" href="{% url 'protected' %}"><h2>Мой профиль</h2></div></a>
+  <div><a class="posts" href="{% url 'create_post' %}"><h2>Опубликовать пост</h2></div></a>
+  <div><a class="posts" href="{% url 'create_audio' %}"><h2>Записать аудио</h2></div></a>
+  <div><a class="posts" href="{% url 'logout' %}"><h2>Выйти</h2></div></a>
+  {% else %}
+  <div><a class="posts" href="{% url 'register' %}"><h2>Регистрация</h2></div></a>
+  <div><a class="posts" href="{% url 'login' %}"><h2>Авторизация</h2></div></a>
+  {% endif %}  
+</div></div>
+  <br><br><br><br><br>
+  {% for post in posts %}
+  <div class="main">
+  <p><div style="width: 150px; height: 60px; overflow: hidden;"><img src="{{ post.author.avatar.url }}" alt="" style="border-radius: 50%; border: 1px solid white; max-width: 50px; max-height: 50px; object-fit: cover;">{{ post.author.get_full_name }}</p></div>
+
+  <p><audio controls>
+    <source src="{{ post.content.url }}">
+  </audio></p>
+  <span style="color: gray; font-size: 13px;">Дата добавления: {{ post.created_at }}</span>
+  <hr>
+  <h4>Комментарии:</h4>
+  <ul>
+    {% for comment in post.comments.all %}
+    <div style="width: 300px; height: 60px; overflow: hidden;">
+    <img src="{{ comment.author.avatar.url }}" alt="" style="object-fit: cover; border-radius: 50%; border: 1px solid white; max-width: 50px; max-height: 50px;">
+      {{ comment.author.get_full_name }} </div>
+      <li><audio controls><source src="{{ comment.content.url }}"></audio> </li>
+  <span style="color: gray; font-size: 13px;">Дата добавления: {{ comment.created_at }}</span>
+    {% empty %}
+      <li>Комментариев нет</li>
+    {% endfor %}
+  </ul>
+  {% if user.is_authenticated %}
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="hidden" name="post_id" value="{{ post.id }}">
+    <div class="com"><p class="comment">{{ comment_form.content }}</p></div>
+    <button type="submit">Добавить комментарий</button>
+    {% endif %}
+  </div>
+  </form>
+{% empty %}
+  <p>Постов нет</p>
+{% endfor %}
+
+<div class="pagination">
+  <span class="step-links">
+      {% if posts.has_previous %}
+          <a href="?page=1">&laquo; первая</a>
+          <a href="?page={{ posts.previous_page_number }}">предыдущая</a>
+      {% endif %}      
+      <center>
+      {% if posts.has_next %}
+          <a href="?page={{ posts.next_page_number }}">следующая</a> <span class="current-page">{{ posts.number }}</span>
+          <a href="?page={{ posts.paginator.num_pages }}">последняя &raquo;</a>
+      {% endif %}
+    </center>
+  </span>
+</div>
+
+</body>
+</html>

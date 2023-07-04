@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/register.css' %}">
+  <title>Регистрация</title>
+</head>
+<body>
+<div class="main">
+<center><h2>Регистрация</h2>
+  <a href="{% url 'home' %}">Перейти на главную</a>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Зарегистрироватся</button><br>
+  <a href="{% url 'login' %}">Уже есть аккаунт?</a>
+</div>
+</form></center>
+</body>
+</html>

@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/create_audio.css' %}">
+    <title>Запись аудиосообщения</title>
+</head>
+<body>
+    <div class="header"><div><a class="posts" href="{% url 'home' %}"><h2>Главная</h2></div></a>
+    <div><a class="posts" href="{% url 'protected' %}"><h2>Мой профиль</h2></div></a>
+    <div><a class="posts" href="{% url 'create_post' %}"><h2>Опубликовать пост</h2></div></a>
+    <div><a class="post" href="{% url 'create_audio' %}"><h2>Записать аудио</h2></div></a>
+    <div><a class="posts" href="{% url 'logout' %}"><h2>Выйти</h2></div></a>
+    </div></div>
+    <br><br><br><br><br>
+    <h1>Запись аудиосообщения</h1>
+    <button id="recordButton">Записать</button>
+    <button id="stopButton" disabled>Остановить</button>
+    <audio id="preview" controls></audio><br><br><br>
+    <span id="message"></span>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{% static 'js/create_post.js' %}"></script>
+    <script src="{% static 'js/create_post2.js' %}"></script>
+</body>
+</html>
